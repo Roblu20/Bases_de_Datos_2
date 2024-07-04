@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Heavenly Burger Club</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+        nav li {
+            margin: 0 1em;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            padding: 2em;
+            background-color: #fff;
+            margin: 1em auto;
+            max-width: 800px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        .menu-section {
+            margin-bottom: 2em;
+        }
+        .menu-section h3 {
+            margin-bottom: 0.5em;
+            color: #666;
+        }
+        .menu-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .menu-section li {
+            margin-bottom: 0.5em;
+            color: #444;
+        }
+        .menu-section li span {
+            display: block;
+            color: #999;
+            font-size: 0.9em;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 0.5em;
+            color: #666;
+        }
+        input {
+            margin-bottom: 1em;
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 1em;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        footer {
+            text-align: center;
+            padding: 1em 0;
+            background-color: #333;
+            color: #fff;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <h:form>
+        <header>
+            <h1>The Heavenly Burger Club</h1>
+            <nav>
+                <ul>
+                    <li><h:commandLink value="Menú" action="#{bean.menu}" /></li>
+                    <li><h:commandLink value="Reservas" action="#{bean.reservas}" /></li>
+                    <li><h:commandLink value="Nuestra Historia" action="#{bean.historia}" /></li>
+                </ul>
+            </nav>
+        </header>
+        <section id="menu">
+            <h2>Menú</h2>
+            <div class="menu-section">
+                <h3>Entradas</h3>
+                <ul>
+                    <li>Fingers de pollo - $8 <span>Con ali-oli verde</span></li>
+                    <li>Dips - $8 <span>Crema de aguacate y crema de queso feta con totopos de maíz blanco y azul</span></li>
+                    <li>Croquetas - $8 <span>De chocos en su tinta con salsa de piquillo, jamón ibérico con salsa bull o de boletus con salsa de trufa y parmesano</span></li>
+                    <li>Las Dalton - $8 <span>Patatas finas con queso ahumado y bacon</span></li>
+                    <li>Las Poblanas - $8 <span>Patatas gruesas con queso ahumado, tinga de pollo, salsa brava y bacon</span></li>
+                    <li>Langostinos - $8 <span>Empanados con salsa dulce y picante</span></li>
+                </ul>
+            </div>
+            <div class="menu-section">
+                <h3>Burgers</h3>
+                <ul>
+                    <li>La Pepita - $15 <span>Queso Cheddar, lechuga, tomate y cebolla roja en pan artesano</span></li>
+                    <li>Corleone - $15 <span>Pesto rojo, mozzarella Scamorza ahumada, panceta troceada y rúcula</span></li>
+                    <li>Smoky - $15 <span>Bacon, mozzarella Scamorza ahumada, salsa chili, rúcula, salsa barbacoa y cebolla en tempura</span></li>
+                    <li>Sorrentina - $15 <span>Burger de ternera, rúcula, mozzarella fresca fundida, orégano, tomate seco en aceite de oliva y cebolla crujiente</span></li>
+                    <li>Supreme - $15 <span>Agrega una descripción aquí</span></li>
+                    <li>Smash Trufada - $15 <span>Agrega una descripción aquí</span></li>
+                </ul>
+            </div>
+            <div class="menu-section">
+                <h3>Guarniciones</h3>
+                <ul>
+                    <li>Patatas Fritas Finas - $3 <span>Difícil cambiarlas, tienen sus fans incondicionales</span></li>
+                    <li>Patatas Fritas Gruesas - $3 <span>Crujientes, cortadas a mano y con piel, ¡deliciosas!</span></li>
+                    <li>Yuca frita - $3 <span>Agrega una descripción aquí</span></li>
+                </ul>
+            </div>
+            <div class="menu-section">
+                <h3>Bebidas</h3>
+                <ul>
+                    <li>Sangría - $5 <span>Tinta, Blanca, Rosada</span></li>
+                    <li>Moscow Mule - $5 <span>Nuestra especialidad</span></li>
+                    <li>Gaseosas - $5 <span>Sprite, Coca Cola, Fanta</span></li>
+                    <li>Vinos - $5 <span>Tinto, Rosado, Blanco</span></li>
+                </ul>
+            </div>
+        </section>
+        <section id="reservas">
+            <h2>Reservas</h2>
+            <h:form>
+                <h:outputLabel for="name" value="Nombre:" />
+                <p:inputText id="name" value="#{bean.name}" required="true" />
+
+                <h:outputLabel for="id" value="Número de cédula:" />
+                <p:inputText id="id" value="#{bean.id}" required="true" />
+
+                <h:outputLabel for="date" value="Fecha de la reserva:" />
+                <p:calendar id="date" value="#{bean.date}" required="true" />
+
+                <h:outputLabel for="time" value="Hora de la reserva:" />
+                <p:inputText id="time" value="#{bean.time}" required="true" />
+
+                <p:commandButton value="Reservar" action="#{bean.reservar}" update=":reservas" />
+            </h:form>
+        </section>
+        <section id="historia">
+            <h2>Nuestra Historia</h2>
+            <p>
+                The Heavenly Burger Club fue fundado como un pequeño negocio familiar. La idea surgió de la pasión de la familia por las hamburguesas gourmet y su deseo de compartir recetas únicas con la comunidad.
+            </p>
+            <p>
+                El restaurante abrió sus puertas en un local modesto, con una decoración sencilla pero acogedora, destacando por sus hamburguesas artesanales y la calidad de sus ingredientes.
+            </p>
+        </section>
+        <footer>
+            <p>&#169; 2024 The Heavenly Burger Club. Todos los derechos reservados.</p>
+        </footer>
+    </h:form>
+</body>
+</html>
