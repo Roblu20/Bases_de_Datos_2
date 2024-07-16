@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login y Registro - The Heavenly Burger Club</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            color: #444;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 1.1em;
+            text-align: left;
+            width: 100%;
+        }
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        button, p:commandButton {
+            padding: 15px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        button:hover, p:commandButton:hover {
+            background-color: #555;
+        }
+        .tab {
+            display: inline-block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #ccc;
+            border-radius: 4px 4px 0 0;
+            margin-right: 10px;
+        }
+        .tab.active {
+            background-color: #f0f0f0;
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+        .forgot-password {
+            color: #007BFF;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: block;
+        }
+        .forgot-password:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="tabs">
+            <div class="tab active" onclick="openTab('login')">Login</div>
+            <div class="tab" onclick="openTab('registroCliente')">Registro Cliente</div>
+            <div class="tab" onclick="openTab('registroEmpleado')">Registro Empleado</div>
+        </div>
+        
+        <div id="login" class="content active">
+            <h2>Login - The Heavenly Burger Club</h2>
+            <h:form id="loginForm">
+                <h:outputLabel for="loginEmail" value="Correo Electrónico:" />
+                <h:inputText id="loginEmail" value="#{loginBean.email}" required="true" />
+
+                <h:outputLabel for="loginPassword" value="Contraseña:" />
+                <h:inputSecret id="loginPassword" value="#{loginBean.password}" required="true" />
+
+                <p:commandButton value="Login" action="#{loginBean.login}" update=":growl" />
+            </h:form>
+            <a class="forgot-password" href="#">¿Olvidó su contraseña?</a>
+        </div>
+
+        <div id="registroCliente" class="content">
+            <h2>Registro Cliente - The Heavenly Burger Club</h2>
+            <h:form id="registroClienteForm">
+                <h:outputLabel for="nombre" value="Nombre:" />
+                <h:inputText id="nombre" value="#{registroBeanCliente.nombre}" required="true" />
+
+                <h:outputLabel for="apellido1" value="Primer Apellido:" />
+                <h:inputText id="apellido1" value="#{registroBeanCliente.apellido1}" required="true" />
+
+                <h:outputLabel for="apellido2" value="Segundo Apellido:" />
+                <h:inputText id="apellido2" value="#{registroBeanCliente.apellido2}" required="true" />
+
+                <h:outputLabel for="email" value="Correo Electrónico:" />
+                <h:inputText id="email" value="#{registroBeanCliente.email}" required="true" />
+
+                <h:outputLabel for="telefono" value="Teléfono:" />
+                <h:inputText id="telefono" value="#{registroBeanCliente.telefono}" required="true" />
+
+                <h:outputLabel for="password" value="Contraseña:" />
+                <h:inputSecret id="password" value="#{registroBeanCliente.password}" required="true" />
+
+                <p:commandButton value="Registrarse" action="#{registroBeanCliente.registrar}" update=":growl" />
+            </h:form>
+        </div>
+
+        <div id="registroEmpleado" class="content">
+            <h2>Registro Empleado - The Heavenly Burger Club</h2>
+            <h:form id="registroEmpleadoForm">
+                <h:outputLabel for="nombre" value="Nombre:" />
+                <h:inputText id="nombre" value="#{registroBeanEmpleado.nombre}" required="true" />
+
+                <h:outputLabel for="apellido" value="Apellido:" />
+                <h:inputText id="apellido" value="#{registroBeanEmpleado.apellido}" required="true" />
+
+                <h:outputLabel for="email" value="Correo Electrónico:" />
+                <h:inputText id="email" value="#{registroBeanEmpleado.email}" required="true" />
+
+                <h:outputLabel for="telefono" value="Teléfono:" />
+                <h:inputText id="telefono" value="#{registroBeanEmpleado.telefono}" required="true" />
+
+                <h:outputLabel for="puesto" value="Puesto:" />
+                <h:inputText id="puesto" value="#{registroBeanEmpleado.puesto}" required="true" />
+
+                <h:outputLabel for="password" value="Contraseña:" />
+                <h:inputSecret id="password" value="#{registroBeanEmpleado.password}" required="true" />
+
+                <p:commandButton value="Registrarse" action="#{registroBeanEmpleado.registrar}" update=":growl" />
+            </h:form>
+        </div>
+    </div>
+
+    <p:growl id="growl" showDetail="true" />
+
+    <script>
+        function openTab(tabName) {
+            var tabs = document.querySelectorAll('.tab');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+
+            var contents = document.querySelectorAll('.content');
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            tabs.forEach(function(tab) {
+                if (tab.textContent.toLowerCase().includes(tabName.toLowerCase())) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
