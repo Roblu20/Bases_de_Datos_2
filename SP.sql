@@ -67,6 +67,7 @@ DELIMITER ;
 
 -- Login (para Clientes y Empleados)
 DELIMITER //
+
 CREATE PROCEDURE login_usuario(
     IN p_email VARCHAR(50),
     IN p_password VARCHAR(256)
@@ -106,7 +107,18 @@ BEGIN
     ELSE
         -- Verificar la contraseña
         IF v_storedPassword = v_encryptedPassword THEN
-            SELECT 99 AS RESULTCODE, v_userType AS USERTYPE; -- Login exitoso
+            -- Login exitoso
+            SELECT 99 AS RESULTCODE, v_userType AS USERTYPE;
+
+            -- Registrar en la bitácora
+            IF v_userType = 'cliente' THEN
+                INSERT INTO Bitacora (accion, descripcion, usuario_id, usuario_tipo, tabla)
+                VALUES ('Login', CONCAT('Inicio de sesión exitoso para cliente: ', p_email), v_cliente_id, 'cliente', 'Clientes');
+            ELSE
+                INSERT INTO Bitacora (accion, descripcion, usuario_id, usuario_tipo, tabla)
+                VALUES ('Login', CONCAT('Inicio de sesión exitoso para empleado: ', p_email), v_empleado_id, 'empleado', 'Empleados');
+            END IF;
+
         ELSE
             SELECT 51 AS RESULTCODE; -- Contraseña inválida
         END IF;
@@ -115,17 +127,18 @@ END //
 
 DELIMITER ;
 
+
 -- Inserción de un cliente
-CALL insertar_cliente_usuario('Juan', 'Pérez', 'Gómez', 'juan@example.com', '1234567890', 'password123');
+CALL insertar_cliente_usuario('test', 'tesst', 'test', 'test@example.com', '1234567890', 'password123');
 
 -- Inserción de un empleado
-CALL insertar_empleado_usuario('Walter', 'Whiite', 'walter@example.com', '211231231', 'Cocinero', 'password111');
+CALL insertar_empleado_usuario('x', 'x', 'x@example.com', '211231231', 'Cocinero', 'passwordx');
 
 -- Login exitoso de un cliente
-CALL login_usuario('juan@example.com', 'password123');
+CALL login_usuario('test@example.com', 'password123');
 
 -- Login exitoso de un empleado
-CALL login_usuario('ana@example.com', 'password456');
+CALL login_usuario('x@example.com', 'passwordx');
 
 -- Usuario no encontrado o inactivo
 CALL login_usuario('notfound@example.com', 'password123');
@@ -294,7 +307,45 @@ CALL actualizar_menu_item(1, 'Pizza Margarita', 'Pizza con queso mozzarella y al
 CALL eliminar_menu_item(1);
 
 
+-- Registro de Insert de un Usuario
+DELIMITER //
 
+CREATE TRIGGER registro_insert_cliente
+AFTER INSERT ON Clientes
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (accion, descripcion, usuario_id, usuario_tipo, tabla)
+    VALUES ('Insert', CONCAT('Nuevo cliente insertado: ', NEW.nombre, ' ', NEW.apellido1, ' ', NEW.apellido2), NEW.idCliente, 'cliente', 'Clientes');
+END //
 
+CREATE TRIGGER registro_insert_empleado
+AFTER INSERT ON Empleados
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (accion, descripcion, usuario_id, usuario_tipo, tabla)
+    VALUES ('Insert', CONCAT('Nuevo empleado insertado: ', NEW.nombre, ' ', NEW.apellido), NEW.empleado_id, 'empleado', 'Empleados');
+END //
 
+DELIMITER ;
 
+-- Registro de Update de un Usuario
+
+DELIMITER //
+
+CREATE TRIGGER registro_update_cliente
+AFTER UPDATE ON Clientes
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (accion, descripcion, usuario_id, usuario_tipo, tabla)
+    VALUES ('Update', CONCAT('Cliente actualizado: ', OLD.nombre, ' ', OLD.apellido1, ' ', OLD.apellido2, ' a ', NEW.nombre, ' ', NEW.apellido1, ' ', NEW.apellido2), NEW.idCliente, 'cliente', 'Clientes');
+END //
+
+CREATE TRIGGER registro_update_empleado
+AFTER UPDATE ON Empleados
+FOR EACH ROW
+BEGIN
+    INSERT INTO Bitacora (accion, descripcion, usuario_id, usuario_tipo, tabla)
+    VALUES ('Update', CONCAT('Empleado actualizado: ', OLD.nombre, ' ', OLD.apellido, ' a ', NEW.nombre, ' ', NEW.apellido), NEW.empleado_id, 'empleado', 'Empleados');
+END //
+
+DELIMITER ;
