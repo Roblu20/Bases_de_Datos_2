@@ -112,3 +112,12 @@ CREATE TABLE Pedidos (
     FOREIGN KEY (cliente_id) REFERENCES Clientes(idCliente) ON DELETE CASCADE
 );
 
+CREATE TABLE Bitacora (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    accion VARCHAR(50) NOT NULL,
+    descripcion TEXT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    usuario_id INT,
+    usuario_tipo ENUM('cliente', 'empleado'),
+    tabla VARCHAR(50)
+);
